@@ -1,0 +1,7 @@
+
+class Anime:
+
+
+
+	def getAnimeList():
+		
