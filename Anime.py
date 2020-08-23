@@ -3,7 +3,7 @@ import requests
 import json
 import pickle
 import pathlib
-
+from datetime import date, datetime
 
 class AnimeScheduler:
 
@@ -28,6 +28,10 @@ class AnimeScheduler:
 					romaji
 					native
 					english
+				}
+				nextAiringEpisode {
+					airingAt
+					episode
 				}
 			}
 		}
@@ -56,10 +60,6 @@ class AnimeScheduler:
 				pyObject = json.loads(pasteBin)
 				mediaList = pyObject['data']['Page']['media']
 				hasNext = pyObject['data']['Page']['pageInfo']['hasNextPage']
-				# print("MediaList ")
-				# print(mediaList)
-				# print("hasNext")
-				# print(hasNext)
 				tempList = tempList + mediaList
 				if hasNext == False :
 					break
@@ -74,7 +74,20 @@ class AnimeScheduler:
 	def printCurrentAnime(self):
 		#check to see if I have cached list; else request new list
 		print("Printing Anime.")
-		print(self.animeList)
+		border = '''
+		##############################################################
+		##############################################################
+		'''
+		for a in self.animeList:
+			print(border)
+			title = a['title']['romaji']
+			if a['nextAiringEpisode'] == None:
+				continue
+			epochTime = a['nextAiringEpisode']['airingAt']
+			timeStamp = datetime.fromtimestamp(epochTime)
+			print("Anime: ", title)
+			print("Airing: ", timeStamp)
+		
 
 
 	def printPrompt(self):
