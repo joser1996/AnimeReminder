@@ -114,10 +114,13 @@ class AnimeScheduler:
 			if inp == '0':
 				self.printCurrentAnime()
 			elif inp == '1':
+				#TODO: Print saved remiders
 				self.printReminders()
 			elif inp == '2':
+				#TODO: Create reminder to email user 30 mins before show starts via some sort of schedule
 				self.addReminder()
 			elif inp == '3':
+				#TODO: Stop remiders
 				self.deleteReminder()
 			elif inp == '4':
 				break
