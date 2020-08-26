@@ -75,18 +75,31 @@ class AnimeScheduler:
 		#check to see if I have cached list; else request new list
 		print("Printing Anime.")
 		border = '''
-		##############################################################
-		##############################################################
+		#############################################################################
+		#############################################################################
 		'''
+		buff = []
+		count = 0
 		for a in self.animeList:
-			print(border)
-			title = a['title']['romaji']
+
 			if a['nextAiringEpisode'] == None:
 				continue
-			epochTime = a['nextAiringEpisode']['airingAt']
-			timeStamp = datetime.fromtimestamp(epochTime)
-			print("Anime: ", title)
-			print("Airing: ", timeStamp)
+			if count == 3:
+				count = 0
+				#print out buffer
+				for idx, item in enumerate(buff):
+					print("Anime: %s, Time: %s" %(item[0], item[1]), end='')
+					print("   ", end='')
+				print(border, flush=True)
+				buff = []
+			else:
+				title = a['title']['romaji']
+				time = datetime.fromtimestamp(a['nextAiringEpisode']['airingAt'])
+				buff.append((title, time))
+				count = count + 1
+
+
+
 		
 
 
